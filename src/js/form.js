@@ -42,7 +42,7 @@ const fields = [
     placeholder: 'Your company',
     required: false,
     hidden: true,
-    value: 'RHS',
+    value: 'business.rh-s.com',
   },
   {
     type: 'text',
