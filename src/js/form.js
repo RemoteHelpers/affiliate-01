@@ -17,7 +17,7 @@ const fields = [
     type: 'tel',
     name: 'client_phone',
     placeholder: '+xxxxxxxxxxxx',
-    required: true,
+    required: false,
     pattern: '',
     label: 'Phone number*',
   },
