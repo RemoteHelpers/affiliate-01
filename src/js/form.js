@@ -63,12 +63,9 @@ const refs = {
   modalBtn: document.querySelector('.modal-btn'),
   form: document.querySelector('.form'),
   calandly: document.querySelector('.calendly-inline-widget'),
+  pixel: document.querySelector('.backdrop .pixel-container'),
 };
 const url = 'https://crm-s.com/api/v1/leads-public';
-
-refs.calandly.addEventListener('click', () => {
-  console.log(e.target);
-});
 
 window.addEventListener(
   'DOMContentLoaded',
@@ -93,7 +90,7 @@ function buildInputs(formFields) {
     }
     switch (field.type) {
       case 'textarea':
-        str += `${openLabel}<textarea type="${field.type}" ${
+        str += `${openLabel}<textarea ${
           field.name ? `name="${field.name}"` : ''
         } cols="30" rows="5" ${
           field.placeholder ? `placeholder="${field.placeholder}"` : ''
@@ -131,14 +128,18 @@ refs.form.addEventListener('submit', formZipSubmit);
 function formZipSubmit(e) {
   e.preventDefault();
   const formData = new FormData(e.currentTarget);
+  const newArr = [];
   const note = formData.get('note');
   const looking = formData.get('looking');
   formData.set('note', `Time: ${note} Needs: ${looking}`);
   formData.delete('looking');
+  formData.forEach((value, name) => newArr.push([name, value]));
+  const parsedData = Object.fromEntries(newArr);
+  console.log(parsedData);
   addUserData(formData)
     .then(data => {
+      openThankYouModal(parsedData);
       console.log(data);
-      setTimeout(openThankYouModal, 100);
     })
     .catch(error => console.log(error.message));
   refs.form.reset();
@@ -152,13 +153,26 @@ async function addUserData(userData) {
   return response.json();
 }
 
-function openThankYouModal() {
+function openThankYouModal({ client_email, client_name }) {
   refs.backdrop.classList.add('is-visible');
   refs.modalBtn.addEventListener('click', closeThankYouModal);
   refs.backdrop.addEventListener('click', onBackDropClick);
+  refs.pixel.insertAdjacentHTML(
+    'beforeend',
+    `        <!-- Affiliateb2b.net - Tracking code -->
+          <img
+            src="https://affiliateb2b.affiliationsoftware.app/script/track.php?cid=v08mw&cost=${client_email}&orderid=${client_name}"
+            width="1"
+            height="1"
+            border="0"
+            alt=""
+          />
+          <!-- Affiliateb2b.net - Tracking code -->`,
+  );
 }
 function closeThankYouModal() {
   refs.backdrop.classList.remove('is-visible');
+  refs.pixel.innerHTML = '';
 }
 function onBackDropClick(e) {
   if (e.target === e.currentTarget) closeThankYouModal();
