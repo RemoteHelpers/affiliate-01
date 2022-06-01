@@ -157,6 +157,10 @@ async function openThankYouModal({ client_email, client_name }) {
   refs.backdrop.addEventListener('click', onBackDropClick);
   await fetch(
     `https://affiliateb2b.affiliationsoftware.app/script/track.php?cid=v08mw&cost=${client_email}&orderid=${client_name}&js`,
+    {
+      method: 'POST',
+      body: { client_email, client_name },
+    },
   )
     .then(response => response.json())
     .then(data => console.log(data));
