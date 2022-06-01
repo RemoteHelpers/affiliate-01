@@ -1788,6 +1788,9 @@ select {
   .section-7 .swiper .logo-wrapper {
     height: 144px;
   }
+  .section-7 .swiper .logo-wrapper .company-logo-view {
+    min-width: 0;
+  }
   .section-7 #js-swiper {
     display: none;
   }
@@ -2391,11 +2394,6 @@ select {
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
   }
-  .section-8 .main-content-container .form .label-container label:nth-child() {
-    width: 400px;
-    font-size: 24px;
-    line-height: 1.375;
-  }
   .section-8 .main-content-container .form .label-container input:nth-child(-n + 10) {
     width: 400px;
     padding-left: 30px;
@@ -2413,6 +2411,25 @@ select {
     font-size: 18px;
   }
   .section-8 .main-content-container .form .label-container input:nth-child(-n + 10)::placeholder {
+    line-height: 1.389;
+    font-size: 18px;
+  }
+  .section-8 .main-content-container .form .label-container textarea {
+    padding-left: 30px;
+  }
+  .section-8 .main-content-container .form .label-container textarea::-webkit-input-placeholder {
+    line-height: 1.389;
+    font-size: 18px;
+  }
+  .section-8 .main-content-container .form .label-container textarea:-ms-input-placeholder {
+    line-height: 1.389;
+    font-size: 18px;
+  }
+  .section-8 .main-content-container .form .label-container textarea::-ms-input-placeholder {
+    line-height: 1.389;
+    font-size: 18px;
+  }
+  .section-8 .main-content-container .form .label-container textarea::placeholder {
     line-height: 1.389;
     font-size: 18px;
   }

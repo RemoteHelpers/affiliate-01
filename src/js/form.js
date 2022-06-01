@@ -66,12 +66,10 @@ const refs = {
   pixel: document.querySelector('.backdrop .pixel-container'),
 };
 const url = 'https://crm-s.com/api/v1/leads-public';
-
 window.addEventListener(
   'DOMContentLoaded',
   drowForm(fields, '.form .label-container'),
 );
-
 function drowForm(fields, selector) {
   const formRef = document.querySelector(selector);
   formRef.insertAdjacentHTML('beforeend', buildInputs(fields));
@@ -128,14 +126,16 @@ refs.form.addEventListener('submit', formZipSubmit);
 function formZipSubmit(e) {
   e.preventDefault();
   const formData = new FormData(e.currentTarget);
-  const newArr = [];
   const note = formData.get('note');
   const looking = formData.get('looking');
   formData.set('note', `Time: ${note} Needs: ${looking}`);
   formData.delete('looking');
+
+  const newArr = [];
   formData.forEach((value, name) => newArr.push([name, value]));
   const parsedData = Object.fromEntries(newArr);
   console.log(parsedData);
+
   addUserData(formData)
     .then(data => {
       openThankYouModal(parsedData);
@@ -149,30 +149,20 @@ async function addUserData(userData) {
     method: 'POST',
     body: userData,
   });
-
   return response.json();
 }
-
-function openThankYouModal({ client_email, client_name }) {
+async function openThankYouModal({ client_email, client_name }) {
   refs.backdrop.classList.add('is-visible');
   refs.modalBtn.addEventListener('click', closeThankYouModal);
   refs.backdrop.addEventListener('click', onBackDropClick);
-  refs.pixel.insertAdjacentHTML(
-    'beforeend',
-    `        <!-- Affiliateb2b.net - Tracking code -->
-          <img
-            src="https://affiliateb2b.affiliationsoftware.app/script/track.php?cid=v08mw&cost=${client_email}&orderid=${client_name}"
-            width="1"
-            height="1"
-            border="0"
-            alt=""
-          />
-          <!-- Affiliateb2b.net - Tracking code -->`,
-  );
+  await fetch(
+    `https://affiliateb2b.affiliationsoftware.app/script/track.php?cid=v08mw&cost=${client_email}&orderid=${client_name}&js`,
+  )
+    .then(response => response.json())
+    .then(data => console.log(data));
 }
 function closeThankYouModal() {
   refs.backdrop.classList.remove('is-visible');
-  refs.pixel.innerHTML = '';
 }
 function onBackDropClick(e) {
   if (e.target === e.currentTarget) closeThankYouModal();

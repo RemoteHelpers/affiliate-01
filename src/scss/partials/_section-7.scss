@@ -20,6 +20,9 @@
       margin-bottom: 20px;
       .logo-wrapper {
         height: 144px;
+        .company-logo-view {
+          min-width: 0;
+        }
       }
     }
     #js-swiper {
