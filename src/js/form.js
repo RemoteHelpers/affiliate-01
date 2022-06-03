@@ -65,7 +65,6 @@ const refs = {
   calandly: document.querySelector('.calendly-inline-widget'),
   pixel: document.querySelector('.backdrop .pixel-container'),
 };
-const url = 'https://crm-s.com/api/v1/leads-public';
 window.addEventListener(
   'DOMContentLoaded',
   drowForm(fields, '.form .label-container'),
@@ -144,6 +143,8 @@ function formZipSubmit(e) {
     .catch(error => console.log(error.message));
   refs.form.reset();
 }
+
+const url = 'https://crm-s.com/api/v1/leads-public';
 async function addUserData(userData) {
   const response = await fetch(url, {
     method: 'POST',
@@ -151,19 +152,19 @@ async function addUserData(userData) {
   });
   return response.json();
 }
+
 async function openThankYouModal({ client_email, client_name }) {
+  let number = window.location.href.split('number=')[1];
   refs.backdrop.classList.add('is-visible');
   refs.modalBtn.addEventListener('click', closeThankYouModal);
   refs.backdrop.addEventListener('click', onBackDropClick);
-  await fetch(
-    `https://affiliateb2b.affiliationsoftware.app/script/track.php?cid=v08mw&cost=${client_email}&orderid=${client_name}&js`,
-    {
-      method: 'POST',
-      body: { client_email, client_name },
-    },
-  )
-    .then(response => response.json())
-    .then(data => console.log(data));
+  if (number !== undefined) {
+    const pixelRef = document.querySelector('.pixel-container');
+    pixelRef.insertAdjacentHTML(
+      'beforeend',
+      `<img src='https://affiliateb2b.affiliationsoftware.app/script/track.php?cid=v08mw&cost=1&orderid=${number}&notes=email:${client_email}name:${client_name}' width='1' height='1' border='0' />`,
+    );
+  }
 }
 function closeThankYouModal() {
   refs.backdrop.classList.remove('is-visible');
