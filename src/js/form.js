@@ -152,17 +152,17 @@ async function addUserData(userData) {
   });
   return response.json();
 }
-
 async function openThankYouModal({ client_email, client_name }) {
   let number = window.location.href.split('number=')[1];
   refs.backdrop.classList.add('is-visible');
   refs.modalBtn.addEventListener('click', closeThankYouModal);
   refs.backdrop.addEventListener('click', onBackDropClick);
+
   if (number !== undefined) {
     const pixelRef = document.querySelector('.pixel-container');
     pixelRef.insertAdjacentHTML(
       'beforeend',
-      `<img src='https://affiliateb2b.affiliationsoftware.app/script/track.php?cid=v08mw&cost=1&orderid=${number}&notes=email:${client_email}name:${client_name}' width='1' height='1' border='0' />`,
+      `<img src='https://affiliateb2b.affiliationsoftware.app/script/track.php?cid=v08mw&cost=1&orderid=${number}&notes=email:${client_email}--name:${client_name}' width='1' height='1' border='0' />`,
     );
   }
 }
