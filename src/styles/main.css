@@ -86,6 +86,14 @@ article > * + * {
   margin-top: 1em;
 }
 
+input:active,
+textarea:active,
+input:focus,
+textarea:focus {
+  outline: 3px solid #d40e49;
+  color: #d40e49;
+}
+
 input,
 button,
 textarea,

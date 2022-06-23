@@ -78,7 +78,13 @@ img {
 article > * + * {
   margin-top: 1em;
 }
-
+input:active,
+textarea:active,
+input:focus,
+textarea:focus {
+  outline: 3px solid $accentYellow;
+  color: $accentYellow;
+}
 input,
 button,
 textarea,

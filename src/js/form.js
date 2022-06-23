@@ -129,21 +129,18 @@ function formZipSubmit(e) {
   const looking = formData.get('looking');
   formData.set('note', `Time: ${note} Needs: ${looking}`);
   formData.delete('looking');
-
-  const newArr = [];
-  formData.forEach((value, name) => newArr.push([name, value]));
-  const parsedData = Object.fromEntries(newArr);
-  console.log(parsedData);
-
+  // const newArr = [];
+  // formData.forEach((value, name) => newArr.push([name, value]));
+  // const parsedData = Object.fromEntries(newArr);
+  // console.log(parsedData);
   addUserData(formData)
     .then(data => {
-      openThankYouModal(parsedData);
+      openThankYouModal();
       console.log(data);
     })
     .catch(error => console.log(error.message));
   refs.form.reset();
 }
-
 const url = 'https://crm-s.com/api/v1/leads-public';
 async function addUserData(userData) {
   const response = await fetch(url, {
@@ -152,19 +149,10 @@ async function addUserData(userData) {
   });
   return response.json();
 }
-async function openThankYouModal({ client_email, client_name }) {
-  let number = window.location.href.split('number=')[1];
+async function openThankYouModal() {
   refs.backdrop.classList.add('is-visible');
   refs.modalBtn.addEventListener('click', closeThankYouModal);
   refs.backdrop.addEventListener('click', onBackDropClick);
-
-  if (number !== undefined) {
-    const pixelRef = document.querySelector('.pixel-container');
-    pixelRef.insertAdjacentHTML(
-      'beforeend',
-      `<img src='https://affiliateb2b.affiliationsoftware.app/script/track.php?cid=v08mw&cost=1&orderid=${number}&notes=email:${client_email}--name:${client_name}' width='1' height='1' border='0' />`,
-    );
-  }
 }
 function closeThankYouModal() {
   refs.backdrop.classList.remove('is-visible');
