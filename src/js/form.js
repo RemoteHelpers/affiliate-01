@@ -45,12 +45,6 @@ const fields = [
     value: 'business.rh-s.com',
   },
   {
-    type: 'text',
-    name: 'promocode',
-    hidden: true,
-    value: 'MVO1Z1W21WOS',
-  },
-  {
     type: 'textarea',
     name: 'looking',
     placeholder: 'Your message',
